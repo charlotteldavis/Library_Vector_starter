@@ -1,4 +1,7 @@
 #include "../includes_usr/fileIO.h"
+#include <fstream>
+#include <iostream>
+#include <vector>
 using namespace std;
 /* clears, then loads books from the file filename
  * returns  COULD_NOT_OPEN_FILE if cannot open filename
@@ -7,7 +10,27 @@ using namespace std;
  * */
 int loadBooks(std::vector<book> &books, const char* filename)
 {
-	return SUCCESS;
+	books.clear();
+//supposed to "load" whatever the heck that means
+	// Open the File
+	std::ifstream in(filename);
+	std::string line;
+
+	while (std::getline(in, line)){
+		if(line.size() > 0)
+			books.push_back(line);//does not like push_back
+
+	if (!in) {
+		return COULD_NOT_OPEN_FILE;
+	}
+	if (books.size() == 0;) {
+		return NO_BOOKS_IN_LIBRARY;
+	}
+//how do you check if all data is loaded
+	if (data is loaded){
+		return SUCCESS;
+	}
+	  }
 }
 
 /* serializes books to the file filename
@@ -17,7 +40,19 @@ int loadBooks(std::vector<book> &books, const char* filename)
  * */
 int saveBooks(std::vector<book> &books, const char* filename)
 {
-	return SUCCESS;
+	std::fstream fs;
+	fs.open (filename);
+
+	if (!fs.is_open()) {
+		return COULD_NOT_OPEN_FILE;
+	}
+	if (books.size() == 0;){
+		return NO_BOOKS_IN_LIBRARY;
+	}
+	//how do you check if all data saved
+	if (all data saved) {
+		return SUCCESS;
+	}
 }
 
 /* clears, then loads patrons from the file filename
@@ -27,7 +62,19 @@ int saveBooks(std::vector<book> &books, const char* filename)
  * */
 int loadPatrons(std::vector<patron> &patrons, const char* filename)
 {
-	return SUCCESS;
+	std::ifstream fs;
+	fs.open (filename);
+
+	if (!fs.is_open()) {
+		return COULD_NOT_OPEN_FILE;
+	}
+	if (patrons.size() == 0;){
+		return NO_BOOKS_IN_LIBRARY;
+	}
+	//how do you check if all data is loaded
+		if (data is loaded){
+			return SUCCESS;
+		}
 }
 
 /* serializes patrons to the file filename
@@ -37,5 +84,19 @@ int loadPatrons(std::vector<patron> &patrons, const char* filename)
  * */
 int savePatrons(std::vector<patron> &patrons, const char* filename)
 {
-	return SUCCESS;
+	std::ifstream fs;
+	fs.open (filename);
+
+	if (!fs.is_open()) {
+		return COULD_NOT_OPEN_FILE;
+	}
+	if (patrons.size() == 0;){
+		return NO_BOOKS_IN_LIBRARY;
+	}
+	 //need to "serialize" patrons to file filename
+	//return success if data all saved
+	//how do you check if all data saved
+	if (all data saved) {
+		return SUCCESS;
+	}
 }

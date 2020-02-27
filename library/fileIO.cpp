@@ -11,7 +11,7 @@ using namespace std;
 int loadBooks(std::vector<book> &books, const char* filename)
 {
 	books.clear();
-//supposed to "load" whatever the heck that means
+//supposed to "load" whatever that means
 	// Open the File
 	std::ifstream in(filename);
 	std::string line;
@@ -28,6 +28,7 @@ int loadBooks(std::vector<book> &books, const char* filename)
 	}
 //how do you check if all data is loaded
 	if (data is loaded){
+//if could not open file is returned or any of the other errors, data not loaded correctly
 		return SUCCESS;
 	}
 	  }

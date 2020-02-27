@@ -11,14 +11,15 @@ using namespace std;
 int loadBooks(std::vector<book> &books, const char* filename)
 {
 	books.clear();
-//supposed to "load" whatever that means
 	// Open the File
 	std::ifstream in(filename);
 	std::string line;
 
 	while (std::getline(in, line)){
-		if(line.size() > 0)
-			books.push_back(line);//does not like push_back
+		if(line.size() > 0) {
+			cout << line + "\n";
+			//books.push_back(line);
+		}
 
 	if (!in) {
 		return COULD_NOT_OPEN_FILE;

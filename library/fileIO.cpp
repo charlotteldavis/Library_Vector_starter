@@ -52,13 +52,15 @@ int saveBooks(std::vector<book> &books, const char* filename)
 	myOutputfile << books;
 
 	myOutputfile.close();
-	if (books.size() == 0;){
+	if (books.size() == 0){
 		return NO_BOOKS_IN_LIBRARY;
 	}
 	else {
+		for (int i = 0; i < books.size(); ++i) {
+				myOutputfile << books[i];
+				}
 		return SUCCESS;
 	}
-	  }
 }
 
 /* clears, then loads patrons from the file filename
@@ -104,13 +106,14 @@ int savePatrons(std::vector<patron> &patrons, const char* filename) {
 		return COULD_NOT_OPEN_FILE;
 	}
 
-	myOutputfile << patrons;
-
 	if (patrons.size() == 0;){
 		return NO_PATRONS_IN_LIBRARY;
 	}
 
 	else {
+		for (int i = 0; i < patrons.size(); ++i) {
+			myOutputfile << patrons[i];
+			}
 		return SUCCESS;
 	}
 }

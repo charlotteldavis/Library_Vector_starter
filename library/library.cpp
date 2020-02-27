@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <time.h>
 #include <iostream>
+#include "fileIO.cpp"
 
 #include "../includes_usr/library.h"
 #include "../includes_usr/datastructures.h"
@@ -18,7 +19,8 @@ using namespace std;
  * then reload them from disk 
  */
 void reloadAllData(){
-
+	loadBooks(std::vector<book> &books, const char* filename);//I don't think this is actually calling method from other cpp file
+	loadPatrons(std::vector<patron> &patrons, const char* filename);
 }
 
 /* checkout a book to a patron
@@ -80,7 +82,7 @@ int enroll(std::string &name){
  * 
  */
 int numbBooks(){
-	return 0;
+	return books.size();
 }
 
 /*

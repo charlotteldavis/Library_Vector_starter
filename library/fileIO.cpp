@@ -15,8 +15,9 @@ int loadBooks(std::vector<book> &books, const char* filename)
 	ifstream myInputFile;
 	myInputFile.open(filename);
 
-	if (!myInputFile.is_open())
+	if (!myInputFile.is_open()) {
 				return COULD_NOT_OPEN_FILE;
+	}
 
 	std::string line;
 	while (!myInputFile.eof()) {
@@ -42,8 +43,8 @@ int loadBooks(std::vector<book> &books, const char* filename)
 int saveBooks(std::vector<book> &books, const char* filename)
 {
 	ofstream myOutputfile;
-	myOutputfile.open(filename);	//could open with  flags myfile.open(MYFILE, ios::out)
-										//note the .c_str() call on MYFILE
+	myOutputfile.open(filename);
+
 	if (!myOutputfile.is_open()) {
 			return COULD_NOT_OPEN_FILE;
 	}
@@ -67,19 +68,27 @@ int saveBooks(std::vector<book> &books, const char* filename)
  * */
 int loadPatrons(std::vector<patron> &patrons, const char* filename)
 {
-	std::ifstream fs;
-	fs.open (filename);
+	ifstream myInputFile;
+	myInputFile.open(filename);
 
-	if (!fs.is_open()) {
+	if (!myInputFile.is_open()) {
 		return COULD_NOT_OPEN_FILE;
 	}
+
+	std::string line;
+	while (!myInputFile.eof()) {
+		getline(myInputFile, line);
+		cout << line;
+		//patrons.push_back(line);
+			//!!!!!!!!pushback is red
+	}
+
 	if (patrons.size() == 0;){
 		return NO_PATRONS_IN_LIBRARY;
 	}
 	else {
 		return SUCCESS;
 	}
-	  }
 }
 
 /* serializes patrons to the file filename
@@ -88,18 +97,19 @@ int loadPatrons(std::vector<patron> &patrons, const char* filename)
  * 			SUCCESS if all data is saved
  * */
 int savePatrons(std::vector<patron> &patrons, const char* filename) {
-	std::ifstream fs;
-	fs.open (filename);
+	ofstream myOutputfile;
+	myOutputfile.open(filename);
 
-	if (!fs.is_open()) {
+	if (!myOutputfile.is_open()) {
 		return COULD_NOT_OPEN_FILE;
 	}
+
+	myOutputfile << patrons;
+
 	if (patrons.size() == 0;){
 		return NO_PATRONS_IN_LIBRARY;
 	}
-	 //need to "serialize" patrons to file filename
-	//return success if data all saved
-	//how do you check if all data saved
+
 	else {
 		return SUCCESS;
 	}

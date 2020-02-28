@@ -133,7 +133,25 @@ int checkin(int bookid){
  *    the patron_id of the person added
  */
 int enroll(std::string &name){
-	return 0;
+	reloadAllData();
+	int nextPatronID;
+	patron myPatron;
+
+	for (int i = 0; i < patrons.size(); i++){
+		if (i == (patrons.size() - 1)){
+			nextPatronID = patrons[i].patron_id + 1; // is adding one a good way to make a new id?
+		}
+	}
+
+	myPatron.patron_id  = nextPatronID;
+	myPatron.name = name;
+	myPatron.number_books_checked_out = 0;
+
+	patrons.push_back(myPatron);
+
+	savePatrons(patrons, PATRONFILE); //why is this error saying it needs 3 parameters?
+
+	return nextPatronID;
 }
 
 /*
@@ -150,7 +168,7 @@ int numbBooks(){
  * (ie. if 3 patrons returns 3)
  */
 int numbPatrons(){
-	return 0;
+	return patrons.size();
 }
 
 /*the number of books patron has checked out
@@ -159,16 +177,40 @@ int numbPatrons(){
  *        or PATRON_NOT_ENROLLED         
  */
 int howmanybooksdoesPatronHaveCheckedOut(int patronid){
-	return 0;
+	int patronIndex = 0;
+	int inPatrons = 0;
+	for (int i = 0; i < patrons.size(); i++){
+		if (patrons[i].patron_id == patronid){
+			patronIndex = i;
+			inPatrons = 1;
+		}
+	}
+	if (inPatrons == 0) {
+		return PATRON_NOT_ENROLLED;
+	}
+	return patrons[patronIndex].number_books_checked_out;
 }
 
 /* search through patrons container to see if patronid is there
- * if so returns the name associated with patronid in the variable name
+ * if so returns the name associated with patronid in the variable name //!!!!!!!should this say sets instead of return
+ *
  * 
  * returns SUCCESS found it and name in name
  *         PATRON_NOT_ENROLLED no patron with this patronid
  */
 int whatIsPatronName(std::string &name,int patronid){
+	int patronIndex = 0;
+	int inPatrons = 0;
+	for (int i = 0; i < patrons.size(); i++){
+		if (patrons[i].patron_id == patronid){
+			patronIndex = i;
+			inPatrons = 1;
+		}
+	}
+	if (inPatrons == 0) {
+		return PATRON_NOT_ENROLLED;
+	}
+	name = patrons[patronIndex].name;
 	return SUCCESS;
 }
 

@@ -9,6 +9,11 @@
 #include "../includes_usr/datastructures.h"
 #include "../includes_usr/fileIO.h"
 using namespace std;
+extern const string BOOKFILE;
+extern const string PATRONFILE;
+
+std::vector<patron> patrons;
+std::vector<book> books;
 
 //NOTE: please ensure patron and book data are loaded from disk before calling the following
 //NOTE: also make sure you save patron and book data to disk any time you make a change to them
@@ -19,8 +24,8 @@ using namespace std;
  * then reload them from disk 
  */
 void reloadAllData(){
-	loadBooks(std::vector<book> &books, const char* filename);//I don't think this is actually calling method from other cpp file
-	loadPatrons(std::vector<patron> &patrons, const char* filename);
+	int loadBooks(books, BOOKFILE); //I don't think this is actually calling method from fileIO.cpp
+	int loadPatrons(patrons, PATRONFILE);
 }
 
 /* checkout a book to a patron
@@ -44,6 +49,34 @@ void reloadAllData(){
  *         TOO_MANY_OUT patron has the max number of books allowed checked out
  */
 int checkout(int bookid, int patronid){
+	int inPatron = 0;
+	reloadAllData();
+	int patronIndex = 0;
+
+    for(int i = 0; i < patrons.size(); i++){
+    	if(patrons[i] == patronid) {
+    		patronIndex = i;
+    		inPatron = 1;
+    	}
+    }
+    if (inPatron == 0){
+    	return PATRON_NOT_ENROLLED;
+    }
+    int inBooks = 0;
+    for(int i = 0; i < books.size(); i++){
+        	if(books[i] == bookid) {
+        		inBooks = 1;
+        	}
+        }
+
+        if (inBooks == 0){
+        	return BOOK_NOT_IN_COLLECTION;
+        }
+
+        if (patrons[patronIndex].number_books_checked_out > MAX_BOOKS_ALLOWED_OUT){
+        	return TOO_MANY_OUT;
+        }
+
 	return SUCCESS;
 }
 

@@ -28,11 +28,16 @@ int loadBooks(std::vector<book> &books, const char* BOOKFILE)
 
 	std::string line;
 	while (!myInputFile.eof()) {
-		bookID, title, author, bookState, loanPatronID = getline(myInputFile, line, delim);
+		bookID, title, author, bookState, loanPatronID = getline(myInputFile, line, delim); //!!!!cannot convert istream<char> to int, see line 107
 		myBook.book_id = bookID;
 		myBook.title = title;
 		myBook.author = author;
-		myBook.state = bookState;
+		if (bookState == 1 ){
+			myBook.state == IN;
+		}
+		else {
+			myBook.state = OUT;
+		}
 
 		books.push_back(myBook);
 
@@ -99,7 +104,7 @@ int loadPatrons(std::vector<patron> &patrons, const char* PATRONFILE)
 
 	std::string line;
 	while (!myInputFile.eof()) {
-		id, pName, numCheckedOut = getline(myInputFile, line);
+		id, pName, numCheckedOut = getline(myInputFile, line); //cannot convert istream<char> to int
 		myPatron.patron_id = id;
 		myPatron.name = pName;
 		myPatron.number_books_checked_out = numCheckedOut;

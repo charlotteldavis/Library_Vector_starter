@@ -137,11 +137,7 @@ int enroll(std::string &name){
 	int nextPatronID;
 	patron myPatron;
 
-	for (int i = 0; i < patrons.size(); i++){
-		if (i == (patrons.size() - 1)){
-			nextPatronID = patrons[i].patron_id + 1; // is adding one a good way to make a new id?
-		}
-	}
+	nextPatronID = patrons[patrons.size() - 1].patron_id + 1;
 
 	myPatron.patron_id  = nextPatronID;
 	myPatron.name = name;

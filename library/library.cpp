@@ -52,9 +52,10 @@ int checkout(int bookid, int patronid){
 	int inPatron = 0;
 	reloadAllData();
 	int patronIndex = 0;
+	int bookIndex = 0;
 
     for(int i = 0; i < patrons.size(); i++){
-    	if(patrons[i] == patronid) {
+    	if(patrons[i].patron_id == patronid) {
     		patronIndex = i;
     		inPatron = 1;
     	}
@@ -64,18 +65,23 @@ int checkout(int bookid, int patronid){
     }
     int inBooks = 0;
     for(int i = 0; i < books.size(); i++){
-        	if(books[i] == bookid) {
+        	if(books[i].book_id == bookid) {
+        		bookIndex = i;
         		inBooks = 1;
         	}
         }
 
-        if (inBooks == 0){
-        	return BOOK_NOT_IN_COLLECTION;
-        }
+    if (inBooks == 0){
+        return BOOK_NOT_IN_COLLECTION;
+    }
 
-        if (patrons[patronIndex].number_books_checked_out > MAX_BOOKS_ALLOWED_OUT){
-        	return TOO_MANY_OUT;
-        }
+    if (patrons[patronIndex].number_books_checked_out > MAX_BOOKS_ALLOWED_OUT){
+        return TOO_MANY_OUT;
+    }
+
+    books[bookIndex].loaned_to_patron_id = patronid;
+    books[bookIndex].state = OUT;
+    patrons[patronIndex].number_books_checked_out ++;
 
 	return SUCCESS;
 }
@@ -93,6 +99,27 @@ int checkout(int bookid, int patronid){
  * 		   BOOK_NOT_IN_COLLECTION
  */
 int checkin(int bookid){
+	reloadAllData();
+	int inBooks = 0;
+	int bookIndex = 0;
+	for(int i = 0; i < books.size(); i++){
+		if(books[i].book_id == bookid) {
+			bookIndex = i;
+	        inBooks = 1;
+	    }
+	}
+	if (inBooks == 0){
+		return BOOK_NOT_IN_COLLECTION;
+	}
+	for(int i = 0; i < patrons.size(); i++){
+	    if(patrons[i].patron_id == books[bookIndex].loaned_to_patron_id) {
+	    	patrons[i].number_books_checked_out --;
+	    	}
+	    }
+
+	books[bookIndex].loaned_to_patron_id = NO_ONE;
+	books[bookIndex].state = IN;
+
 	return SUCCESS;
 }
 
